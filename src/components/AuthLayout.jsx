@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 export default function Protected({ children, authentication = true }) {
     const navigate = useNavigate()
     const [loader, setLoader] = useState(true)
-    const authstatus = useSelector((state) => state.auth.status)
+    const authstatus = useSelector((state) => state.auth?.status)
 
     useEffect(() => {
         if(authentication && authstatus !== authentication){
@@ -15,5 +15,5 @@ export default function Protected({ children, authentication = true }) {
         }
         setLoader(false)
     }, [authstatus, navigate,authentication])
-    return loader ? <h1>loading....</h1> : <h1>{children}</h1>
+    return loader ? <h1>loading....</h1> : <>{children}</>
 }

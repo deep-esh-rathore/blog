@@ -20,6 +20,7 @@ useEffect(()=>{
       dispatch(logout())
     }
   })
+  .catch(()=>dispatch(logout()))
   .finally(()=> setloading(false))
 
 },[])
@@ -29,7 +30,7 @@ useEffect(()=>{
     <div className='w-full block'>
       <Header/>
       <main>
-        todo:
+        <Outlet/>
       </main>
       <Footer/>
     </div>

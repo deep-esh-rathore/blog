@@ -16,14 +16,18 @@ function Login() {
 
     const login = async (data) => {
         setError("")
+        console.log("Login data", data)
         try {
-            await authservice.login(data.email, data.password)
+            await authservice.logout() // Ensure any existing session is cleared
+            const session = await authservice.login(data.email, data.password)
             if (session) {
-                const userData = await authservice.getCurrentUser()
+                setTimeout(async () => {
+                    const userData = await authservice.getCurrentUser()
                 if (userData) {
-                    dispatch(authLogin(userData))
+                    dispatch(authLogin({ userData }))
                     navigate('/')
                 }
+                },500)
             }
         } catch (error) {
             setError(error.message)
@@ -62,8 +66,7 @@ function Login() {
                                 required: true,
                                 validate: {
                                     matchpatern: (value) => {
-                                        const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-                                        return pattern.test(value) || "Please enter a valid email address"
+                                        const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) || "Please enter a valid email address"
                                     }
                                 }
                             })}
@@ -73,7 +76,8 @@ function Login() {
                             placeholder="Enter your password"
                             type='password'
                             {...register('password', {
-                                required: true })}
+                                required: true
+                            })}
                         />
                         <button type='submit' className='w-full'>Sign In</button>
                     </div>

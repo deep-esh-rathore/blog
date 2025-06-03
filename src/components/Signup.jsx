@@ -44,7 +44,7 @@ function Signup() {
                 </h2>
                 <p className='mt-2 text-center text-base text-black/60'>
                     already have an account?
-                    <Link to='/Signup'
+                    <Link to='/login'
                         className='font-medium text-primary transition-all duration-200
                                         hover:underline'>
                         Sign in
@@ -67,8 +67,7 @@ function Signup() {
                                 required: true,
                                 validate: {
                                     matchpatern: (value) => {
-                                        const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-                                        return pattern.test(value) || "Please enter a valid email address"
+                                        const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) || "Please enter a valid email address"
                                     }
                                 }
                             })}
@@ -78,7 +77,7 @@ function Signup() {
                         placeholder="enter your password"
                         {...register("password",{required:true,})}
                         />
-                        <button type='submit'> Create Account</button>
+                        <Button type='submit' className='w-full'> Create Account</Button>
                     </div>
                 </form>
             </div>
