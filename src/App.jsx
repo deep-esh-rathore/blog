@@ -1,4 +1,5 @@
-import { useState,useEffect} from 'react'
+import { useEffect} from 'react'
+import { useSelector } from 'react-redux'
 import{Header, Footer} from './components/index'
 import {login,logout} from './store/authSlice'
 import authservice from './appwrite/auth'
@@ -8,8 +9,8 @@ import { Outlet } from 'react-router-dom'
 
 function App() {
 
-  const [loading,setloading] = useState(true)
-const dispatch = useDispatch()
+  const loading = useSelector((state) => state.auth.loading)
+  const dispatch = useDispatch()
 
 useEffect(()=>{
   authservice.getCurrentUser()
@@ -20,10 +21,13 @@ useEffect(()=>{
       dispatch(logout())
     }
   })
-  .catch(()=>dispatch(logout()))
-  .finally(()=> setloading(false))
+  .catch((err)=>{
+    console.log("getCurrentUser Error", err)
+    dispatch(logout())
+  })
+  // .finally(()=> setloading(false))
 
-},[])
+},[dispatch])
 
   return !loading ?(
   <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
@@ -34,11 +38,7 @@ useEffect(()=>{
       </main>
       <Footer/>
     </div>
-  </div> )
-  :null
-    
-    
-  
+  </div> ) :null
 }
 
 export default App

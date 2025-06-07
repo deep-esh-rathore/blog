@@ -19,10 +19,11 @@ export class Service{
             return await this.databases.createDocument(
                 conf.appwriteDatabase,
                 conf.appwriteCollection,
-                {title,content,featuredImage,status,userId,slug}
+                slug,
+                {title,content,featuredImage,status,userId}
             )
         } catch (error) {
-            console.log("Appwrite serive :: createPost :: error",error)
+            console.log("Appwrite service :: createPost :: error",error)
         }
     }
 
@@ -31,9 +32,11 @@ export class Service{
             return await this.databases.updateDocument(
                 conf.appwriteDatabase,
                 conf.appwriteCollection,
+                slug,
+                {title,content,featuredImage,status}
             )
         } catch (error) {
-            console.log("Appwrite serive :: updatePost :: error",error)
+            console.log("Appwrite service :: updatePost :: error",error)
         }
     }
 
@@ -46,7 +49,7 @@ export class Service{
             )
             return true;
         } catch (error) {
-            console.log("Appwrite serive :: updatePost :: error",error)
+            console.log("Appwrite service :: updatePost :: error",error)
             return false;
         }
     }
@@ -55,11 +58,11 @@ export class Service{
         try {
             return await this.databases.getDocument(
                 conf.appwriteDatabase,
-                conf.appwriteProject,
+                conf.appwriteCollection,
                 slug
             )
         } catch (error) {
-            console.log("Appwrite serive :: getPost :: error",error)
+            console.log("Appwrite service :: getPost :: error",error)
             return false;
         }
     }
@@ -68,11 +71,11 @@ export class Service{
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabase,
-                conf.appwriteProject,
+                conf.appwriteCollection,
                 queries,
             )
         } catch (error) {
-            console.log(error.message)
+            console.log( error.message);
             return false
         }
     }
