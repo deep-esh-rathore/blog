@@ -14,26 +14,26 @@ export class Service{
         this.storage = new Storage(this.client)
     }
 
-    async createPost({title,content,featuredImage,status,userId,slug}){
+    async createPost({title,content,featuredimage,status,userId,slug}){
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabase,
                 conf.appwriteCollection,
                 slug,
-                {title,content,featuredImage,status,userId}
+                {title,content,featuredimage,status,userId}
             )
         } catch (error) {
             console.log("Appwrite service :: createPost :: error",error)
         }
     }
 
-    async updatePost(slug,{title,content,featuredImage,status}){
+    async updatePost(slug,{title,content,featuredimage,status}){
         try {
             return await this.databases.updateDocument(
                 conf.appwriteDatabase,
                 conf.appwriteCollection,
                 slug,
-                {title,content,featuredImage,status}
+                {title,content,featuredimage,status}
             )
         } catch (error) {
             console.log("Appwrite service :: updatePost :: error",error)
