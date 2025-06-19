@@ -35,6 +35,10 @@ export default function PostForm({ post }) {
                 navigate(`/post/${dbPost.$id}`);
             }
         } else {
+            if (!userData) {
+  console.error("User not logged in. Cannot create post.");
+  return;
+}
             const file = await appwriteService.uploadFile(data.image[0]);
 
             if (file) {
@@ -101,7 +105,7 @@ export default function PostForm({ post }) {
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={appwriteService.getFilePreview(post.featuredimage)}
+                            src={appwriteService.getFileURL(post.featuredimage)}
                             alt={post.title}
                             className="rounded-lg"
                         />

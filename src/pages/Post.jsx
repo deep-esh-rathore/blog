@@ -17,8 +17,10 @@ export default function Post() {
 
     useEffect(() => {
         if (slug) {
-            appwriteService.getPost(slug).then((post) => {
-                if (post) setPost(post);
+            appwriteService.getPost(slug).then(async(post) => {
+                if (post){
+                    setPost(post);
+                }
                 else navigate("/");
             });
         } else navigate("/");
@@ -27,7 +29,7 @@ export default function Post() {
     const deletePost = () => {
         appwriteService.deletePost(post.$id).then((status) => {
             if (status) {
-                appwriteService.deleteFile(post.featuredImage);
+                appwriteService.deleteFile(post.featuredimage);
                 navigate("/");
             }
         });
@@ -36,21 +38,21 @@ export default function Post() {
     return post ? (
         <div className="py-8">
             <Container>
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+                <div className="w-full flex flex-col md:flex-row items-center justify-center mb-4 relative rounded-xl p-2 gap-4">
                     <img
-                        src={appwriteService.getFilePreview(post.featuredImage)}
+                        src={appwriteService.getFileURL(post.featuredimage)}
                         alt={post.title}
-                        className="rounded-xl"
+                        className="rounded-xl w-full max-w-md h-64 object-contain mx-auto"
                     />
 
                     {isAuthor && (
-                        <div className="absolute right-6 top-6">
+                        <div className="absolute md:static right-6 top-4 md:top-auto md:translate-y-0 flex flex-col md:flex-row gap-2 mt-2 md:mt-0">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3">
+                                <Button bgColor="bg-green-500" className="w-full md:w-auto">
                                     Edit
                                 </Button>
                             </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost}>
+                            <Button bgColor="bg-red-500" onClick={deletePost} className="w-full md:w-auto">
                                 Delete
                             </Button>
                         </div>

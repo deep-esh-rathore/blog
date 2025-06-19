@@ -108,8 +108,8 @@ export class Service{
         }
     }
 
-    async getFilePreview(fileId){
-        return this.storage.getFilePreview(
+    getFileURL(fileId){
+        return this.storage.getFileView(
             conf.appwriteBucket,
             fileId
         )
